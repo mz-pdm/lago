@@ -28,7 +28,7 @@ pip
 
    .. code:: bash
 
-       $ dnf install -y python2-devel libvirt libvirt-devel \
+       $ dnf install -y python3-devel libvirt libvirt-devel \
            libguestfs-tools libguestfs-devel gcc libffi-devel \
            openssl-devel qemu-kvm
 
@@ -268,7 +268,7 @@ Troubleshooting
        status. You may also use the system-wide package, if those are
        available for your distribution. In that case, if using a virtualenv,
        ensure you are creating it with '--system-site-packages' option.
-       For Fedora/CentOS the package is named `python2-libguestfs`, and for
+       For Fedora/CentOS the package is named `python3-libguestfs`, and for
        Ubuntu `python-guestfs`.
 
 .. _Configuration: Configuration.html

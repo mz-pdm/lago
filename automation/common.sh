@@ -136,7 +136,7 @@ run_functional_sdk_tests() {
 
     unset LAGO__START__WAIT_SUSPEND
     TEST_RESULTS="$PWD/exported-artifacts/test_results/functional-sdk" \
-       tox -v -r -c tox-sdk.ini -e py27-sdk -- --stage "$stage"
+       tox -v -r -c tox-sdk.ini -e py3-sdk -- --stage "$stage"
 }
 
 run_functional_tests() {
