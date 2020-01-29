@@ -28,6 +28,7 @@ import logging
 import os
 import uuid
 
+import six
 import yaml
 
 import six
@@ -180,7 +181,7 @@ class VirtEnv(object):
     ):
         # todo: move this logic to PrefixExportManager
         if not vms_names:
-            vms_names = list(self._vms.keys())
+            vms_names = six.iterkeys(self._vms)
 
         running_vms = []
         vms = []
@@ -332,8 +333,8 @@ class VirtEnv(object):
     def start(self, vm_names=None):
         if not vm_names:
             log_msg = 'Start Prefix'
-            vms = list(self._vms.values())
-            nets = list(self._nets.values())
+            vms = self._vms.values()  # noqa: W1656
+            nets = self._nets.values()  # noqa: W1656
         else:
             log_msg = 'Start specified VMs'
             vms = [self._vms[vm_name] for vm_name in vm_names]
@@ -516,8 +517,8 @@ class VirtEnv(object):
                 vm.save()
 
         spec = {
-            'nets': list(self._nets.keys()),
-            'vms': list(self._vms.keys()),
+            'nets': list(self._nets),
+            'vms': list(self._vms),
         }
 
         with LogTask('Save env'):

@@ -104,7 +104,7 @@ class VectorThread:
 
 
 def invoke_in_parallel(func, *args_sequences):
-    vt = VectorThread(func_vector(func, list(zip(*args_sequences))))
+    vt = VectorThread(func_vector(func, six.moves.zip(*args_sequences)))
     vt.start_all()
     return vt.join_all()
 
@@ -850,8 +850,7 @@ def filter_spec(spec, paths, wildcard='*', separator='/'):
         try:
             remove_key(path.split(separator), spec)
         except LagoUserException as e:
-            msg = e.args[0].format(path=path)
-            e.args = (msg, ) + e.args[1:]
+            e.message = str(e).format(path=path)
             raise
 
 

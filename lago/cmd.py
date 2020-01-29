@@ -646,7 +646,7 @@ def do_list(workdir_path, out_format, **kwargs):
 
     workdir = lago_workdir.Workdir(path=workdir_path)
     workdir.load()
-    resources = list(workdir.prefixes.keys())
+    resources = sorted(six.iterkeys(workdir.prefixes))
 
     print(out_format.format(resources))
 
