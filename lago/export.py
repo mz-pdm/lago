@@ -11,13 +11,15 @@ import time
 import json
 import shutil
 
+import six
+
 from . import log_utils, utils
 
 LOGGER = logging.getLogger(__name__)
 LogTask = functools.partial(log_utils.LogTask, logger=LOGGER)
 
 
-class DiskExportManager(object):
+class DiskExportManager(six.with_metaclass(ABCMeta, object)):
     """
     DiskExportManager object is responsible on the export process of
     an image from the current Lago prefix.
@@ -38,8 +40,6 @@ class DiskExportManager(object):
         do_compress(bool): If true, apply compression to the exported
             disk.
     """
-
-    __metaclass__ = ABCMeta
 
     def __init__(self, dst, disk_type, disk, do_compress):
         """

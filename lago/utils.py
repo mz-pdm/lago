@@ -101,11 +101,11 @@ class VectorThread:
                     exc_info[0] = exc_info[1]
                     exc_info[1] = None
                     six.reraise(*exc_info)
-        return map(lambda x: x.get('return', None), self.results)
+        return [x.get('return', None) for x in self.results]
 
 
 def invoke_in_parallel(func, *args_sequences):
-    vt = VectorThread(func_vector(func, zip(*args_sequences)))
+    vt = VectorThread(func_vector(func, six.moves.zip(*args_sequences)))
     vt.start_all()
     return vt.join_all()
 
@@ -122,9 +122,9 @@ _CommandStatus = collections.namedtuple(
 
 
 class CommandStatus(_CommandStatus):
-    def __nonzero__(self):
-        return self.code
-
+    def __bool__(self):
+        return self.code != 0
+    __nonzero__ = __bool__
 
 def _run_command(
     command,
@@ -817,7 +817,7 @@ def filter_spec(spec, paths, wildcard='*', separator='/'):
                 if isinstance(spec, list):
                     iterator = iter(spec)
                 elif isinstance(spec, collections.Mapping):
-                    iterator = spec.itervalues()
+                    iterator = six.itervalues(spec)
                 else:
                     raise LagoUserException(
                         'Glob char {char} should refer only to dict or list, '
@@ -849,7 +849,7 @@ def filter_spec(spec, paths, wildcard='*', separator='/'):
         try:
             remove_key(path.split(separator), spec)
         except LagoUserException as e:
-            e.message = e.message.format(path=path)
+            e.message = str(e).format(path=path)
             raise
 
 

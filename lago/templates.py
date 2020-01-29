@@ -19,6 +19,10 @@ definitions:
 
 """
 from __future__ import absolute_import
+from __future__ import division
+
+from future.builtins import super
+
 import errno
 import json
 import logging
@@ -28,11 +32,11 @@ import shutil
 import urllib
 import sys
 
+import six
+
 import lago.utils as utils
 from . import log_utils
 from .config import config
-
-from future.builtins import super
 
 LOGGER = logging.getLogger(__name__)
 
@@ -151,7 +155,7 @@ class HttpTemplateProvider:
             except RuntimeError:
                 pass
         full_url = posixpath.join(self.baseurl, url) + suffix
-        response = urllib.urlopen(full_url)
+        response = six.moves.urllib.request.urlopen(full_url)
         if response.code >= 300:
             raise RuntimeError(
                 'Failed no retrieve URL %s:\nCode: %d' %
@@ -159,7 +163,7 @@ class HttpTemplateProvider:
             )
 
         meta = response.info()
-        file_size_kb = int(meta.getheaders("Content-Length")[0]) / 1024
+        file_size_kb = int(meta["Content-Length"]) // 1024
         if file_size_kb > 0:
             sys.stdout.write(
                 "Downloading %s Kilobytes from %s \n" %
@@ -170,13 +174,13 @@ class HttpTemplateProvider:
             percent = (count * block_size * 100 / float(total_size))
             sys.stdout.write(
                 "\r% 3.1f%%" % percent + " complete (%d " %
-                (count * block_size / 1024) + "Kilobytes)"
+                (count * block_size // 1024) + "Kilobytes)"
             )
             sys.stdout.flush()
 
         if dest:
             response.close()
-            urllib.urlretrieve(full_url, dest, report)
+            six.moves.urllib.request.urlretrieve(full_url, dest, report)
             sys.stdout.write("\n")
         return response
 
@@ -339,7 +343,7 @@ class TemplateRepository:
                 data = fd.read()
         else:
             try:
-                response = urllib.urlopen(path)
+                response = six.moves.urllib.request.urlopen(path)
                 if response.code >= 300:
                     raise RuntimeError('Unable to load repo from %s' % path)
 

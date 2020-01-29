@@ -13,6 +13,7 @@ import uuid
 import logging
 
 import paramiko
+import six
 
 from . import (
     utils,
@@ -124,7 +125,8 @@ def wait_for_ssh(
             )
         except Exception as err:
             ret = -1
-            sys.exc_clear()
+            if six.PY2:
+                sys.exc_clear()
             LOGGER.debug(
                 'Got exception while sshing to %s: %s',
                 host_name,
@@ -223,7 +225,7 @@ def drain_ssh_channel(chan, stdin=None, stdout=sys.stdout, stderr=sys.stderr):
     done = False
     while not done:
         if stdout_is_tty:
-            arr = array.array('h', range(4))
+            arr = array.array('h', six.moves.range(4))
             if not fcntl.ioctl(stdout.fileno(), termios.TIOCGWINSZ, arr):
                 if tty_h != arr[0] or tty_w != arr[1]:
                     tty_h, tty_w = arr[:2]

@@ -275,7 +275,7 @@ class Prefix(object):
         """
         allocated_subnets = []
         try:
-            for net_spec in conf.get('nets', {}).itervalues():
+            for net_spec in six.itervalues(conf.get('nets', {})):
                 if net_spec['type'] != 'nat':
                     continue
 
@@ -288,7 +288,7 @@ class Prefix(object):
                     allocated_subnet = self._subnet_store.acquire(
                         self.paths.uuid()
                     )
-                    net_spec['gw'] = str(allocated_subnet.iter_hosts().next())
+                    net_spec['gw'] = str(next(allocated_subnet.iter_hosts()))
 
                 allocated_subnets.append(allocated_subnet)
         except:
@@ -1083,7 +1083,9 @@ class Prefix(object):
         dst_path = os.path.basename(url_path)
         dst_path = self.paths.prefixed(dst_path)
         with LogTask('Downloading %s' % url):
-            urllib.urlretrieve(url=os.path.expandvars(url), filename=dst_path)
+            six.moves.urllib.request.urlretrieve(
+                url=os.path.expandvars(url), filename=dst_path
+            )
 
         return dst_path
 
@@ -1254,7 +1256,7 @@ class Prefix(object):
 
     def build(self, conf):
         builders = []
-        for vm_name, spec in conf.viewitems():
+        for vm_name, spec in six.viewitems(conf):
             disks = spec.get('disks')
             if disks:
                 for disk in disks:
@@ -1423,7 +1425,7 @@ class Prefix(object):
         """
 
         subnets = (
-            str(net.gw()) for net in self.virt_env.get_nets().itervalues()
+            str(net.gw()) for net in six.itervalues(self.virt_env.get_nets())
         )
 
         self._subnet_store.release(subnets)
@@ -1532,7 +1534,7 @@ class Prefix(object):
 
         utils.invoke_in_parallel(
             _collect_artifacts,
-            self.virt_env.get_vms().values(),
+            six.values(self.virt_env.get_vms()),
         )
 
     def _get_scripts(self, host_metadata):
@@ -1673,7 +1675,7 @@ class Prefix(object):
     def deploy(self):
         utils.invoke_in_parallel(
             self._deploy_host,
-            self.virt_env.get_vms().values()
+            six.values(self.virt_env.get_vms())
         )
 
 

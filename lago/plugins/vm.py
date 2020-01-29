@@ -371,8 +371,7 @@ class VMProviderPlugin(plugins.Plugin):
                     raise
 
 
-class VMPlugin(plugins.Plugin):
-    __metaclass__ = ABCMeta
+class VMPlugin(six.with_metaclass(ABCMeta, plugins.Plugin)):
     '''
     This class takes care of the high level abstraction for a VM (a domain in
     the initfile lingo). From starting/stopping it to loading and calling the
@@ -888,7 +887,7 @@ def _resolve_service_class(class_name, service_providers):
         lago.plugins.NoSuchPluginError: if there was no service plugin that
             matched the search
     """
-    for plugin in service_providers.itervalues():
+    for plugin in six.itervalues(service_providers):
         if plugin.__class__.__name__ == class_name:
             return plugin
 
@@ -898,7 +897,7 @@ def _resolve_service_class(class_name, service_providers):
             class_name,
             [
                 plugin.__class__.__name__
-                for plugin in service_providers.itervalues()
+                for plugin in six.itervalues(service_providers)
             ],
         )
     )

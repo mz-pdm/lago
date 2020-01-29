@@ -400,7 +400,7 @@ class LocalLibvirtVMProvider(vm_plugin.VMProviderPlugin):
             )
         except ExtractPathError as err:
             LOGGER.debug(
-                '%s: failed extracting files: %s', self.vm.name(), err.message
+                '%s: failed extracting files: %s', self.vm.name(), err
             )
             if self._has_guestfs:
                 self.extract_paths_dead(paths, ignore_nopath)
