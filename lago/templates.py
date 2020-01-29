@@ -162,7 +162,7 @@ class HttpTemplateProvider:
             )
 
         meta = response.info()
-        file_size_kb = int(meta.getheaders("Content-Length")[0]) // 1024
+        file_size_kb = int(meta["Content-Length"]) // 1024
         if file_size_kb > 0:
             sys.stdout.write(
                 "Downloading %s Kilobytes from %s \n" %

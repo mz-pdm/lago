@@ -1084,7 +1084,9 @@ class Prefix(object):
         dst_path = os.path.basename(url_path)
         dst_path = self.paths.prefixed(dst_path)
         with LogTask('Downloading %s' % url):
-            urllib.urlretrieve(url=os.path.expandvars(url), filename=dst_path)
+            six.moves.urllib.request.urlretrieve(
+                url=os.path.expandvars(url), filename=dst_path
+            )
 
         return dst_path
 
@@ -1255,7 +1257,7 @@ class Prefix(object):
 
     def build(self, conf):
         builders = []
-        for vm_name, spec in six.iteritems(conf):
+        for vm_name, spec in six.viewitems(conf):
             disks = spec.get('disks')
             if disks:
                 for disk in disks:

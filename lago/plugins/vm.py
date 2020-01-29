@@ -888,7 +888,7 @@ def _resolve_service_class(class_name, service_providers):
         lago.plugins.NoSuchPluginError: if there was no service plugin that
             matched the search
     """
-    for plugin in service_providers.itervalues():
+    for plugin in six.itervalues(service_providers):
         if plugin.__class__.__name__ == class_name:
             return plugin
 
@@ -898,7 +898,7 @@ def _resolve_service_class(class_name, service_providers):
             class_name,
             [
                 plugin.__class__.__name__
-                for plugin in service_providers.itervalues()
+                for plugin in six.itervalues(service_providers)
             ],
         )
     )

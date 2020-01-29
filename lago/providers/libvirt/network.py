@@ -234,7 +234,7 @@ class NATNetwork(Network):
             )
 
             ipv4s = []
-            for hostname in sorted(six.iterkeys(self._spec['mapping'])):
+            for hostname in sorted(self._spec['mapping']):
                 ip4 = self._spec['mapping'][hostname]
                 if ip4 in ipv4s:
                     continue
