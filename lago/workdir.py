@@ -26,6 +26,8 @@ directories, one per prefix. Where the link points to the default prefix to
 use.
 
 """
+from __future__ import absolute_import
+
 import os
 import logging
 import shutil

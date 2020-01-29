@@ -20,6 +20,8 @@
 """
 Utilities to help deal with the libvirt python bindings
 """
+from __future__ import absolute_import
+
 import libvirt
 import xmltodict
 import lxml.etree

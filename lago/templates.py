@@ -18,6 +18,7 @@ definitions:
         having to change the template name everywhere
 
 """
+from __future__ import absolute_import
 import errno
 import json
 import logging

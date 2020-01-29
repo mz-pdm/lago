@@ -94,6 +94,8 @@ as::
 TODO: Allow per-plugin namespacing to get rid of the `**kwargs` parameter
 """
 
+from __future__ import absolute_import
+
 import functools
 from abc import (
     abstractmethod,

@@ -24,6 +24,8 @@ An OutFormatPlugin is used to format the output of the commands that extract
 information from the perfixes, like status.
 """
 
+from __future__ import absolute_import
+
 import collections
 import json
 import yaml

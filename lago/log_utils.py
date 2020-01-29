@@ -20,7 +20,9 @@
 """
 This module defines the special logging tools that lago uses
 """
+from __future__ import absolute_import
 from future.builtins import super
+
 import logging
 import logging.config
 import os

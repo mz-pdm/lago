@@ -27,6 +27,8 @@ The other plugin extension point, the [VM Provider Plugin], that allows you to
 create an alternative implementation of the provisioning details for the VM,
 for example, using a remote libvirt instance or similar.
 """
+from __future__ import absolute_import
+
 from copy import deepcopy
 import contextlib
 import errno

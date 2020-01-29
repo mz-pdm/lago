@@ -20,6 +20,8 @@
 #
 """
 """
+from __future__ import absolute_import
+
 from stevedore import ExtensionManager
 import logging
 import warnings
