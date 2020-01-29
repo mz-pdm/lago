@@ -42,7 +42,7 @@ install -p -D -m 644 etc/sudo/* %{buildroot}%{_sysconfdir}/sudoers.d/
 
 %files
 
-###################### python-lago package
+###################### python3-lago package
 %package -n python3-%{name}
 Summary: Library to perform lago operations
 BuildArch: noarch

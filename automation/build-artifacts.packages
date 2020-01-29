@@ -2,8 +2,8 @@ dnf
 dnf-command(builddep)
 git
 make
-python2
-python2-dulwich
-python2-setuptools
+python3
+python3-dulwich
+python3-setuptools
 rpm-build
 tar
