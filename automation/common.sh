@@ -96,7 +96,7 @@ run_installation_tests() {
 
     # fail if a glob turns out empty
     shopt -s failglob
-    for package in {python-,}lago ; do
+    for package in {python3-,}lago ; do
         echo "    $package: installing"
         ## Install one by one to make sure the deps are ok
         $yum install -y exported-artifacts/"$package"-[[:digit:]]*.noarch.rpm \
@@ -136,7 +136,7 @@ run_functional_sdk_tests() {
 
     unset LAGO__START__WAIT_SUSPEND
     TEST_RESULTS="$PWD/exported-artifacts/test_results/functional-sdk" \
-       tox -v -r -c tox-sdk.ini -e py27-sdk -- --stage "$stage"
+       tox -v -r -c tox-sdk.ini -e py3-sdk -- --stage "$stage"
 }
 
 run_functional_tests() {
