@@ -89,17 +89,14 @@ def auth_callback(credentials, user_data):
 
 
 def get_libvirt_connection(name):
-    if name not in LIBVIRT_CONNECTIONS:
-        auth = [
-            [libvirt.VIR_CRED_AUTHNAME, libvirt.VIR_CRED_PASSPHRASE],
-            auth_callback, None
-        ]
-        libvirt_url = config.get('libvirt_url', 'qemu:///system')
+    auth = [
+        [libvirt.VIR_CRED_AUTHNAME, libvirt.VIR_CRED_PASSPHRASE],
+        auth_callback, None
+    ]
+    libvirt_url = config.get('libvirt_url', 'qemu:///system')
 
-        libvirt.registerErrorHandler(f=libvirt_callback, ctx=None)
-        LIBVIRT_CONNECTIONS[name] = libvirt.openAuth(libvirt_url, auth)
-
-    return LIBVIRT_CONNECTIONS[name]
+    libvirt.registerErrorHandler(f=libvirt_callback, ctx=None)
+    return libvirt.openAuth(libvirt_url, auth)
 
 
 def get_template(basename):
