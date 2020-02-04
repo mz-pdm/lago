@@ -143,6 +143,7 @@ class HttpTemplateProvider:
         Raises:
             RuntimeError: if the url gave http error when retrieving it
         """
+        url_sans_ext = url
         if not url.endswith('.xz'):
             try:
                 return self.open_url(
@@ -152,7 +153,9 @@ class HttpTemplateProvider:
                 )
             except RuntimeError:
                 pass
-        full_url = posixpath.join(self.baseurl, url) + suffix
+        elif suffix:
+            url_sans_ext = url[:-len('.xz')]
+        full_url = posixpath.join(self.baseurl, url_sans_ext) + suffix
         try:
             response = urllib.urlopen(full_url)
         except HTTPError as e:
