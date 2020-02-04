@@ -651,7 +651,7 @@ class TemplateStore:
                     utils.json_dump(temp_ver.get_metadata(), f)
 
             sha1 = utils.get_hash(temp_dest)
-            if temp_ver.get_hash() != sha1:
+            if temp_ver.get_hash().decode('utf-8') != sha1:
                 raise RuntimeError(
                     'Image %s does not match the expected hash %s' % (
                         temp_ver.name,
