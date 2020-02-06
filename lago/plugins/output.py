@@ -106,7 +106,12 @@ class JSONOutFormatPlugin(OutFormatPlugin):
 
 class YAMLOutFormatPlugin(OutFormatPlugin):
     def format(self, info_dict):
-        return yaml.dump(info_dict, default_flow_style=False)
+        return yaml.safe_dump(
+            info_dict,
+            default_flow_style=False,
+            encoding='utf-8',
+            allow_unicode=True
+        )
 
 
 class FlatOutFormatPlugin(OutFormatPlugin):
